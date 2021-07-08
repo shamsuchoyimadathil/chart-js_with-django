@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'crispy_forms',
+
     'chart',
 ]
 
@@ -56,7 +58,9 @@ ROOT_URLCONF = 'ChartJs_with_django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR  /"templates"
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
