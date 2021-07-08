@@ -3,7 +3,7 @@ body{
     padding: 0;
     
 }
-canvas{
-    height: 20px;
-    width: 20px;
+.form-row{
+    width: 80%;
+    margin: auto;
 }
