@@ -31,7 +31,7 @@ class ChartForm(forms.ModelForm):
 
             FormActions(
 
-            Submit('save','Save',css_class="btn btn-primary col text-center mt-2",),
+            Submit('save','Save',css_class="btn btn-primary col text-center mt-2 mb-2",),
             #Submit('','Clear All',css_class="btn btn-danger col text-center mt-2",id="clear_btn", sdfas=True)
             )
         )
@@ -60,13 +60,9 @@ class ChartForm1(forms.ModelForm):
 
             FormActions(
 
-            Submit('save','Save',css_class="btn btn-primary col text-center mt-2",),
-            #Submit('','Clear All',css_class="btn btn-danger col text-center mt-2",id="clear_btn", sdfas=True)
+            Submit('save','Save',css_class="btn btn-primary col text-center mt-2 ml-2 mb-2",),
             )
         )
-
-
-
 
 
 

@@ -1,45 +1,58 @@
 from django.http.response import HttpResponse
+from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import DeleteView
 
+# Create your views here.
+
 from . models import Chart
 from . forms import ChartForm , ChartForm1
 
-# Create your views here.
 
-def chart_view(request):
+def chart_continue_view(request):
+    
     files = Chart.objects.all()
-
     if request.method == "POST":
         form = ChartForm1(request.POST)
-       # print(form)
-        if form.is_valid():
-            clean_data = Chart()
-            #clean_data.heading = form.cleaned_data["heading"]
-            #clean_data.content = form.cleaned_data["content"]
-            #clean_data.percentage = form.cleaned_data["percentage"]
-            clean_data.save()
 
-            form = ChartForm1()
-            return render(request, "chart.html",{
-                "file":files,
-                "form":form,})
-            #return HttpResponseRedirect('/')
+        if form.is_valid():
+            heading = request.session.get('heading')
+            form_data = form.cleaned_data
+            c = Chart(heading=heading, content=form_data['content'], percentage=form_data['percentage'])
+            c.save()
+            return HttpResponseRedirect(reverse('chart-continue-view'))
     else:
-        form = ChartForm()
-        #delete_all = Chart.objects.all().delete()
+        form = ChartForm1()
 
     return render(request,"chart.html",{
         "file":files,
         "form":form,
-        #"delete":delete_all
     })
 
-# class Delete_data(DeleteView ,pk=p):
-#     model = Chart
-#     success_url ="/"
+
+def chart_view(request):
+    print('chart_view', request)
+    files = Chart.objects.all()
+
+    if request.method == "POST":
+        form = ChartForm(request.POST)
+        if form.is_valid():
+            form.save()
+            request.session['heading'] = form.cleaned_data['heading']
+
+            return HttpResponseRedirect(reverse('chart-continue-view'))
+
+    else:
+        form = ChartForm()
+
+    return render(request,"chart.html",{
+        "file":files,
+        "form":form,
+    })
+
 
 def delete_all_data(request):
     dlt = Chart.objects.all().delete()
+    request.session['heading'] = None
     return HttpResponseRedirect("/")
